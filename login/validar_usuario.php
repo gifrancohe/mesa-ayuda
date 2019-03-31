@@ -4,6 +4,8 @@ ini_set('display_errors', '1');
 //Importamos el objeto que creamos con la conexión a la base de datos
 include("../bd/database.php");
 
+session_start();
+
 //Recibimos las dos variables
 $user = $_POST["user"];
 $password = $_POST["password"];
@@ -13,17 +15,16 @@ $sth = $objetoPDO->prepare($query);
 $resultado = $sth->execute();
 
 if($resultado !== false){
-    $array_filas = $sth->fetch(PDO::FETCH_ASSOC);
+    $dataEmpleado = $sth->fetch(PDO::FETCH_ASSOC);
 }else{
     echo "La consulta ha producido un error, revisala";
 }
  
-if(!empty($array_filas)) {
-    foreach( $array_filas as $key => $fila_usuario){
-        echo "<pre>";
-        var_dump($key. " : ". $fila_usuario);
-        echo "</pre>";
+if(!empty($dataEmpleado)) {
+    foreach( $dataEmpleado as $key => $data){
+        $_SESSION[$key] = $data;
     }
+    header("Location:../index.php");
 }else {
     echo "No se encotraron resultados";
 }
