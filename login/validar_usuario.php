@@ -1,6 +1,6 @@
 <?php 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
 //Importamos el objeto que creamos con la conexión a la base de datos
 include("../bd/database.php");
 

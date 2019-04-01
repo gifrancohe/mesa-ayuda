@@ -35,7 +35,7 @@
                 <li><a href="sass.html">Administrar usuarios </a></li>
                 <li><a href="badges.html">Gestión areas y Empleados</a></li>
                 <li><a href="collapsible.html">Consultas e Informes</a></li>
-                <li><a href="login/login.php">Mis requisitos</a></li>
+                <li><a href="layouts/mis_requisitos.php">Mis requisitos</a></li>
                 <li><a href="#" class='btn btn.floating pink lighten-1'><?= $name; ?></a></li>
               
             </ul>
