@@ -35,19 +35,24 @@
                         $sth = $this->db->prepare($query);
                         $resultado = $sth->execute();
                         $sth->closeCursor();
+                        
+                        // commit the transaction
+                        if($this->db->commit()) {
+                            header("Location:../index.php?message=Requisito creado correctamente.");
+                        }else {
+                            header("Location:../index.php?message=Ocurrio un error al crear el requisito, intentelo nuevamente.");
+                        }
+            
+                        return true;
+                    }else {
+                        header("Location:../index.php?message=No se creo el requisito.");
                     }
         
-                    // commit the transaction
-                    if($this->db->commit()) {
-                        header("Location:../index.php?message=Requisito creado correctamente.");
-                    }
-        
-                    return true;
                         
                     
                 } catch (PDOException $e) {
                     $this->db->rollBack();
-                    die($e->getMessage());
+                    header("Location:../index.php?message=".$e->getMessage());
                 }
             }   
             

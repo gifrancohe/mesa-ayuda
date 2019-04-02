@@ -9,7 +9,10 @@
 <div class="container" style="margin-top: 80px;">
     <div class="row card">
         <?php if(isset($_GET['message'])): ?>
-            <div class="card-panel teal lighten-2"><?= $_GET['message'] ?></div>
+            <div class="card-panel teal lighten-2" id="card-response-message">
+                <p class="white-text" id="response-message"><?= $_GET['message'] ?></p>
+                <i class="tiny material-icons white-text" id="clear-message" onclick="clearMessage()">clear</i>
+            </div>
         <?php endif;?>
         <form class="col s12" style="padding: 50px;" id="form-radicar" name="form-radicar" action="../controllers/RadicarController.php?create=1" method="post">
             <div class="row center">
@@ -44,6 +47,30 @@
         var elems = document.querySelectorAll('select');
         var instances = M.FormSelect.init(elems);
     }, false);
-
+    
+    /**
+     * Función para ocultar el mensaje que llegué al crear una notificación
+     */
+    function clearMessage() {
+        var s = document.getElementById('card-response-message').style;
+        s.opacity = 1;
+        removeParam();
+        (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,40)})();
+        return true;
+    }
+    /**
+     * Función para remover los parametro que lleguen por url
+     */
+    function removeParam()
+    {
+        var url = document.location.href;
+        var urlparts = url.split('?');
+        if (urlparts.length >= 1) {
+            var urlBase = urlparts.shift(); 
+            var queryString = urlparts.join("?"); 
+            window.history.pushState('',document.title,urlBase); //Se agrega la url base a la url del navegador
+        }
+        return true;
+    }
     
 </script>
