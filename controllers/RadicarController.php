@@ -79,8 +79,23 @@
             return $areas;
         }
 
-        public function misRequisitos() {
+        public function getRequisitos() {
+            $idArea = $_SESSION['FKAREA'];
 
+            $query = "SELECT * FROM `REQUISITO` AS `REQ`
+            INNER JOIN `DETALLEREQ` AS `DET` ON `DET`.FKREQ = `REQ`.IDREQ
+            INNER JOIN `AREA` ON `AREA`.`IDAREA` = `REQ`.FKAREA
+            WHERE `REQ`.FKAREA = ".$idArea." 
+            AND `DET`.FKESTADO = 1";
+            
+            $sth = $this->db->prepare($query);
+            $resultado = $sth->execute();
+
+            if($resultado !== false){
+                $requisitos = $sth->fetchAll(PDO::FETCH_ASSOC);
+            }
+
+            return $requisitos;
         }
 
         public function obtenerEmpleados() {
