@@ -16,6 +16,12 @@
 ?>
 <div class="container" style="margin-top: 80px;">
     <div class="row card s12 m12">
+        <?php if(isset($_GET['message'])): ?>
+            <div class="card-panel teal lighten-2" id="card-response-message">
+                <p class="white-text" id="response-message"><?= $_GET['message'] ?></p>
+                <i class="tiny material-icons white-text" id="clear-message" onclick="clearMessage()">clear</i>
+            </div>
+        <?php endif;?>
         <form class="col s12" style="padding: 50px;" id="form-mis-requisitos" name="form-mis-requisitos" action="../controllers/RadicarController.php?list=1" method="post">
             <div class="row col s12 m6">
                     <div class="row center">
@@ -27,7 +33,7 @@
                     </div>
                     <div class="row center">
                         <div class="input-field col s12 m6 center">
-                            <select name="radicado-area">
+                            <select name="radicado-empleado">
                                 <option value="" disabled selected>Selecciona el empleado</option>
                                 <?php foreach($radicar->obtenerEmpleados() as $key => $area):?>
                                     <option value="<?= $area['IDEMPLEADO'];?>"> <?= utf8_encode($area['NOMBRE']); ?> </option>
@@ -60,7 +66,7 @@
                                     <td><?= $requisito['IDREQ']; ?></td>
                                     <td><?= $requisito['NOMBRE']; ?></td>
                                     <td><?= $requisito['FECHA']; ?></td>
-                                    <td><label><input type="checkbox" name="<?= $requisito['IDDETALLEREQ'] ?>" /><span></span></label></td>
+                                    <td><label><input type="checkbox" name="requisitos[<?= $requisito['IDDETALLEREQ'] ?>][]" /><span></span></label></td>
                                 </tr>
                             <?php endforeach;?>
                         </tbody>
@@ -70,7 +76,7 @@
         </form>
     </div>
 </div>
-
+<script src="../js/clear_message.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', (event) => { 
         var elems = document.querySelectorAll('select');
