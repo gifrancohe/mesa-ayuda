@@ -15,7 +15,7 @@
     $requisitos = $radicar->getMisrequisitos();//Se obtienen los requisitos en estado Asignado y que pertenencen al usuario en sessión
 ?>
 <main>
-<div class="container" style="margin-top: 80px;">
+<div class="container" style="margin-top: 20px;">
     <div class="row card s12 m12">
         <?php if(isset($_GET['message'])): ?>
             <div class="card-panel teal lighten-2" id="card-response-message">
@@ -23,7 +23,7 @@
                 <i class="tiny material-icons white-text" id="clear-message" onclick="clearMessage()">clear</i>
             </div>
         <?php endif;?>
-        <form class="col s12" style="padding: 50px;" id="form-mis-requisitos" name="form-mis-requisitos" action="../controllers/RadicarController.php?solu=1" method="post">
+        <form class="col s12" id="form-mis-requisitos" name="form-mis-requisitos" action="../controllers/RadicarController.php?solu=1" method="post">
             <div class="row col s12 m6">
                     <div class="row center">
                         <div class="input-field col s6 m12">

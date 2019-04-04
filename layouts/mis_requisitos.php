@@ -15,7 +15,7 @@
     $requisitos = $radicar->getRequisitos();//Se obtienen los requisitos en estado Radicado y que pertenencen al área de la persona logeada
 ?>
 <main>
-    <div class="container" style="margin-top: 80px;">
+    <div class="container" style="margin-top: 20px;">
         <div class="row card s12 m12">
             <?php if(isset($_GET['message'])): ?>
                 <div class="card-panel teal lighten-2" id="card-response-message">
@@ -23,17 +23,17 @@
                     <i class="tiny material-icons white-text" id="clear-message" onclick="clearMessage()">clear</i>
                 </div>
             <?php endif;?>
-            <form class="col s12" style="padding: 50px;" id="form-mis-requisitos" name="form-mis-requisitos" action="../controllers/RadicarController.php?list=1" method="post">
+            <form class="col s12" id="form-mis-requisitos" name="form-mis-requisitos" action="../controllers/RadicarController.php?list=1" method="post">
                 <div class="row col s12 m6">
                         <div class="row center">
-                            <div class="input-field col s6 m12">
+                            <div class="input-field col s12 m12">
                                 <i class="material-icons prefix">mode_edit</i>
                                 <textarea id="icon_prefix2" class="materialize-textarea" name="radicado-text"></textarea>
                                 <label for="icon_prefix2">Asignar o Cancelar requisito: Mensaje</label>
                             </div>
                         </div>
                         <div class="row center">
-                            <div class="input-field col s12 m6 center">
+                            <div class="input-field col s12 m12 center">
                                 <select name="radicado-empleado">
                                     <option value="" disabled selected>Selecciona el empleado</option>
                                     <?php foreach($radicar->obtenerEmpleados() as $key => $area):?>
@@ -42,8 +42,15 @@
                                 </select>
                                 <label>Empleado Requisito</label>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="input-field col s12 m6 center">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Asignar
+                                <button class="btn waves-effect waves-light red" type="submit" name="cancelar">Cancelar
+                                    <i class="material-icons right">cancel</i>
+                                </button>
+                            </div>
+                            <div class="input-field col s12 m6 center">
+                                <button class="btn waves-effect waves-light" type="submit" name="asignar">Asignar
                                     <i class="material-icons right">send</i>
                                 </button>
                             </div>

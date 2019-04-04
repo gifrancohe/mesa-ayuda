@@ -7,7 +7,7 @@
     $radicar = new Radicar($objetoPDO);
 ?>
 <main>
-    <div class="container" style="margin-top: 80px;">
+    <div class="container" style="margin-top: 20px;">
         <div class="row card">
             <?php if(isset($_GET['message'])): ?>
                 <div class="card-panel teal lighten-2" id="card-response-message">
@@ -15,7 +15,7 @@
                     <i class="tiny material-icons white-text" id="clear-message" onclick="clearMessage()">clear</i>
                 </div>
             <?php endif;?>
-            <form class="col s12" style="padding: 50px;" id="form-radicar" name="form-radicar" action="../controllers/RadicarController.php?create=1" method="post">
+            <form class="col s12" id="form-radicar" name="form-radicar" action="../controllers/RadicarController.php?create=1" method="post">
                 <div class="row center">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">mode_edit</i>
