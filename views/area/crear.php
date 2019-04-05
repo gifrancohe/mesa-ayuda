@@ -2,8 +2,13 @@
     
     session_start();
     if(!isset($_SESSION['IDEMPLEADO'])) {
-        header("Location:login/login.php");
+        header("Location:../../views/login/login.php");
     }
     include("layouts/header.php");
-    include("layouts/radicar_requisito.php");
+?>
+
+
+
+
+<?php
     include("layouts/footer.php");

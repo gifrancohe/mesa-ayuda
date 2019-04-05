@@ -15,8 +15,11 @@
   <?php 
     session_start();
     if(isset($_SESSION["IDEMPLEADO"])) {
-        header("Location:index.php");
+        header("Location:../../index.php");
     }
+    
+    include("../../controllers/LoginController.php");
+    include("../../models/Login.php");
   ?>
   <body class="grey darken-3">
     <div class="container" id="container-login">
@@ -25,14 +28,14 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
-                        <input id="user" type="text" name="user" class="validate" required="" aria-required="true">
+                        <input id="user" type="text" name="user" class="validate-custom">
                         <label for="user" data-error="wrong" data-success="right">Usuario</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">offline_pin</i>
-                        <input id="password" type="password" name="password" class="validate" required="" aria-required="true">
+                        <input id="password" type="password" name="password" class="validate-custom">
                         <label for="password" data-error="wrong" data-success="right">Contraseña</label>
                     </div>
                 </div>
