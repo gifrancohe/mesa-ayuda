@@ -10,6 +10,9 @@ session_start();
 $user = $_POST["user"];
 $password = $_POST["password"];
 
+$PDO = new database();
+$objetoPDO = $PDO->connect();
+
 $query = "SELECT * FROM EMPLEADO WHERE EMAIL='".$user."'";
 $sth = $objetoPDO->prepare($query);
 $resultado = $sth->execute();
