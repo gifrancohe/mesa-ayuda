@@ -73,6 +73,10 @@
             }
             return true;
         }
+
+        /**
+         * Función para validar campos vacios en el formulario
+         */
         
     </script>
 </main>

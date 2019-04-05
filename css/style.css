@@ -13,11 +13,10 @@ body {
 main {
     flex: 1 0 auto;
 }
-/*footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}*/
+
+form {
+    padding: 20px !important;
+}
 
 #row-login-form {
     position: absolute;

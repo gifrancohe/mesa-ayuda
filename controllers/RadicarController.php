@@ -91,10 +91,12 @@
         public function getRequisitos() {
             $idArea = $_SESSION['FKAREA'];
 
-            $query = "SELECT * FROM `REQUISITO` AS `REQ`
-            INNER JOIN `DETALLEREQ` AS `DET` ON `DET`.FKREQ = `REQ`.IDREQ
-            INNER JOIN `AREA` ON `AREA`.`IDAREA` = `REQ`.FKAREA
+            $query = "SELECT * 
+            FROM `REQUISITO` AS `REQ`
+            LEFT JOIN `DETALLEREQ` AS `DET` ON `DET`.FKREQ = `REQ`.IDREQ
+            LEFT JOIN `AREA` ON `AREA`.`IDAREA` = `REQ`.FKAREA
             WHERE `REQ`.FKAREA = ".$idArea." 
+            AND `REQ`.FKESTADO = 1
             AND `DET`.FKESTADO = 1";
             
             $sth = $this->db->prepare($query);
@@ -127,26 +129,51 @@
          * Función que permite asignar los requisitos a un empleado especifico
          */
         public function asignarRequisitos($data) {
+            
             if(!empty($data)) {
                 try {
                     $this->db->beginTransaction();
-                    
-                    foreach( $data['requisitos'] as $key => $req) {
-                        // Insertamos el detalle del requisito
-                        $fecha = date('Y-m-d h:i:s');
+                    $fecha = date('Y-m-d h:i:s'); //Fecha en que se asigna o cancela el requisito
+                    $estado = 0;
+                    if(isset($data['asignar'])) {
                         $estado = 2; //Estado Asignado
-                        $query = "INSERT INTO DETALLEREQ (FECHA, OBSERVACION, FKEMPLE, FKREQ, FKESTADO) 
-                        VALUES ('".$fecha."', '".$data['radicado-text']."', ".$_SESSION['IDEMPLEADO'].", ".$key.", ".$estado.")";
-                        $sth = $this->db->prepare($query);
-                        $resultado = $sth->execute();
-                        $sth->closeCursor();
-                        
-                        // commit the transaction
-                        if($this->db->commit()) {
-                            header("Location:../layouts/mis_requisitos.php?message=Se asignaron correctamente los requisitos.");
-                        }else {
-                            header("Location:../layouts/mis_requisitos.php?message=No se efectuo el commit.");
+                    }elseif(isset($data['cancelar'])){
+                        $estado = 5; //Estado Cancelado
+                    }
+
+                    $empleado = null;
+                    if(isset($data['radicado-empleado'])) {
+                        $empleado = $data['radicado-empleado'];
+                    }
+                    
+                    if($estado) {
+                        foreach( $data['requisitos'] as $key => $req) {
+                            // Cambiamos el estado del requisito
+                            $query = "UPDATE REQUISITO SET FKESTADO =".$estado." WHERE IDREQ = ".$key.";";
+                            $sth = $this->db->prepare($query);
+                            $resultado = $sth->execute();
+                            $sth->closeCursor();
+                            
+                            // Insertamos el detalle del requisito
+                            $query = "INSERT INTO DETALLEREQ (FECHA, OBSERVACION, FKEMPLE, FKREQ, FKESTADO, FKEMPLEASIG) 
+                            VALUES ('".$fecha."', '".$data['radicado-text']."', ".$_SESSION['IDEMPLEADO'].", ".$key.", ".$estado.", ".$empleado.")";
+                            $sth = $this->db->prepare($query);
+                            $resultado = $sth->execute();
+                            $sth->closeCursor();
+                            
+                            // commit the transaction
+                            if($this->db->commit()) {
+                                if($estado == 2) {
+                                    header("Location:../layouts/mis_requisitos.php?message=Se asignaron correctamente los requisitos.");
+                                }else {
+                                    header("Location:../layouts/mis_requisitos.php?message=Se cancelaron correctamente los requisitos.");
+                                }
+                            }else {
+                                header("Location:../layouts/mis_requisitos.php?message=No se efectuo el commit.");
+                            }
                         }
+                    }else{
+                        header("Location:../layouts/mis_requisitos.php?message=No llegó ningun estado.");
                     }
                 } catch (PDOException $e) {
                     $this->db->rollBack();
