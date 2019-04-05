@@ -1,10 +1,12 @@
 <?php
-
+if(!class_exists('Conexion')) {
+    include('Conexion.php');
+}
 class AreaController {
     
     public $area;
 
-    public function AreaController($area) {
+    public function AreaController($area = null) {
         $this->area = $area;
     }
 
@@ -35,7 +37,28 @@ class AreaController {
             $db->rollBack();
             header("Location:../index.php?message=".$e->getMessage());
         }
+    }
+
+    public function getAreas() {
         
+        $query = "SELECT `IDAREA`, `NOMBRE`, `FKEMPLE` FROM `AREA`";
         
+        $conn = new Conexion();
+        $db = $conn->connect();
+
+        try {
+            $sth = $db->prepare($query);
+            $resultado = $sth->execute();
+            if($resultado) {
+                $resultado = $sth->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $sth->closeCursor();
+            return $resultado;
+        } catch (PDOException $e) {
+            echo "<pre>";
+            var_dump($e->getMessage());
+            echo "</pre>";
+            die;
+        }
     }
 }

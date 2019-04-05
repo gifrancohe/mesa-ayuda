@@ -43,3 +43,26 @@ main {
     height: 635px;
 }
 
+#card-response-message {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    margin-top: 15px;
+}
+
+#response-message {
+    margin-left: 10px;
+}
+
+#clear-message {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.table-usuarios {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+

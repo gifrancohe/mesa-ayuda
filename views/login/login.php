@@ -17,14 +17,18 @@
     if(isset($_SESSION["IDEMPLEADO"])) {
         header("Location:../../index.php");
     }
-    
-    include("../../controllers/LoginController.php");
-    include("../../models/Login.php");
+    include('../../controllers/Conexion.php')
   ?>
   <body class="grey darken-3">
     <div class="container" id="container-login">
         <div class="row z-depth-5 white" id="row-login-form">
-            <form class="col s12" id="form-login" action="validar_usuario.php" onsubmit="return validateForm()" method="post">
+            <?php if(isset($_GET['message'])): ?>
+                <div class="card-panel teal lighten-2" id="card-response-message">
+                    <p class="white-text" id="response-message"><?= $_GET['message'] ?></p>
+                    <i class="tiny material-icons white-text" id="clear-message" onclick="clearMessage()">clear</i>
+                </div>
+            <?php endif;?>
+            <form class="col s12" id="form-login" action="../../controllers/LoginController.php?login=1" onsubmit="return validateForm()" method="post">
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
@@ -51,5 +55,6 @@
     <!--JavaScript at end of body for optimized loading-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="../../js/validar_formulario.js"></script>
+    <script src="../../js/clear_message.js"></script>
   </body>
 </html>
