@@ -12,7 +12,7 @@ class Empleado {
     public $fkusuario;
 
 
-    public function Empleado($nombre, $telefono, $cargo, $email, $fkarea, $fkemple = null, $fkusuario) {
+    public function Empleado($nombre, $telefono, $cargo, $email, $fkarea, $fkemple = null, $fkusuario = null) {
         $this->nombre = $nombre;
         $this->telefono = $telefono;
         $this->cargo = $cargo;
@@ -20,6 +20,11 @@ class Empleado {
         $this->fkarea = $fkarea;
         $this->fkemple = $fkemple;
         $this->fkusuario = $fkusuario;
+        $this->idempleado = $idempleado;
+    }
+
+    public function getIdempleado() {
+        return $this->idempleado;
     }
 
     public function getNombre() {

@@ -120,13 +120,18 @@ class EmpleadoController {
 
     public function ver($id) {
         $query = "SELECT 
-            `EMPLEADO`.*,
-            `USUARIO`.*,
+            `EMPLEADO`.`IDEMPLEADO`,
+            `EMPLEADO`.`NOMBRE`,
+            `EMPLEADO`.`TELEFONO` AS `TELÉFONO`,
+            `EMPLEADO`.`CARGO`,
+            `EMPLEADO`.`EMAIL`,
+            `USUARIO`.`USUARIO`,
+            (SELECT `EMPLE`.`NOMBRE` FROM `EMPLEADO` AS `EMPLE` WHERE `EMPLE`.`IDEMPLEADO` = `EMPLEADO`.`FKEMPLE` ) AS `LIDER`,
             `AREA`.`IDAREA`,
-            `AREA`.`NOMBRE` AS `NOMBRE_AREA`
+            `AREA`.`NOMBRE` AS `AREA`
         FROM `EMPLEADO`
-        LEFT JOIN `USUARIO` ON `USUARIO`.IDUSUARIO = `EMPLEADO`.FKUSUARIO
-        LEFT JOIN `AREA` ON `AREA`.`IDAREA` = `EMPLEADO`.`FKAREA`
+        INNER JOIN `USUARIO` ON `USUARIO`.IDUSUARIO = `EMPLEADO`.FKUSUARIO
+        INNER JOIN `AREA` ON `AREA`.`IDAREA` = `EMPLEADO`.`FKAREA`
         WHERE `EMPLEADO`.`IDEMPLEADO` = ".$id."
         ORDER BY `EMPLEADO`.`IDEMPLEADO`";
         
@@ -147,6 +152,40 @@ class EmpleadoController {
             echo "</pre>";
             die;
         }
+    }
+
+    public function editar($id) {
+        
+        $nombre = $this->empleado->getNombre();
+        $telefono = $this->empleado->getTelefono();
+        $cargo = $this->empleado->getCargo();
+        $email = $this->empleado->getEmail();
+        $area = $this->empleado->getFkarea();
+        
+        $query = "UPDATE `EMPLEADO` SET 
+        `NOMBRE`='".$nombre."',  `TELEFONO` = '".$telefono."', `CARGO` = '".$cargo."', `EMAIL` = '".$email."', `FKAREA`=".$area." 
+        WHERE `IDEMPLEADO` = ".$id;
+        
+        $conn = new Conexion();
+        $db = $conn->connect();
+
+        try {
+            $sth = $db->prepare($query);
+            $resultado = $sth->execute();
+            if($resultado) {
+                $sth->closeCursor();
+                header("Location:../../views/empleado/lista.php?message=Se actualizo correctamente el usuario ".$nombre);
+            }else {
+                $error = $sth->errorInfo();
+                $sth->closeCursor();
+                header("Location:../../views/empleado/editar.php?error=Ocurrio un error editando. Error: ".$error[2]);
+            }
+
+        } catch (PDOException $e) {
+            header("Location:../../views/empleado/editar.php?error=".$e->getMessage());
+        }
+        
+        
     }
 }
 
@@ -179,30 +218,19 @@ if(!empty($_POST['Empleado'])) {
         
     }
     if($_GET['edit']) {
-        
-        $login = new Login($_POST['Empleado']['usuario'], $_POST['Empleado']['password']);
-        $loginCtrl = new LoginController($login);
-        $idUser = $loginCtrl->createUser();
+        $empleado = new Empleado(
+            $_POST['Empleado']['nombre'], 
+            $_POST['Empleado']['telefono'],
+            $_POST['Empleado']['cargo'], 
+            $_POST['Empleado']['email'],
+            $_POST['Empleado']['area'], 
+            $_POST['Empleado']['lider'] ? $_POST['Empleado']['lider']:null 
+        );
 
-        # Check if your variable is an integer
-        if ( is_array($idUser) ) {
-            $error = $idUser[2];
-            header("Location:../../views/empleado/crear.php?error=Ocurrio un error al crear el usuario. Error: ".$error);
-        }else{
-            $empleado = new Empleado(
-                $_POST['Empleado']['nombre'], 
-                $_POST['Empleado']['telefono'],
-                $_POST['Empleado']['cargo'], 
-                $_POST['Empleado']['email'],
-                $_POST['Empleado']['fkarea'], 
-                $_POST['Empleado']['fkemple'] ? $_POST['Empleado']['fkemple']:null,
-                $idUser
-            );
-    
-            $emplCrtl = new EmpleadoController($empleado);
-            $emplCrtl->crear();
-        }
-        
-        
+        $emplCrtl = new EmpleadoController($empleado);
+        $emplCrtl->editar($_POST['Empleado']['idempleado']);
+    }
+    if($_GET['view']) {
+
     }
 }

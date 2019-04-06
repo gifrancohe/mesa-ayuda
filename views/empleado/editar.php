@@ -50,11 +50,12 @@
             <form class="col s12" style="padding: 50px;" id="form-edit-empleado" name="Empleado[form-edit-empleado]" onsubmit="return validateForm()" action="../../controllers/EmpleadoController.php?edit=1" method="post">
                 <div class="row">
                     <div class="input-field col s12 m6">
+                        <input id="idempleado" name="Empleado[idempleado]" value="<?= $empleado['IDEMPLEADO'] ?>" type="hidden" class="validate-custom">
                         <input placeholder="Ingresa un nombre" id="nombre" name="Empleado[nombre]" value="<?= $empleado['NOMBRE'] ?>" type="text" class="validate-custom">
                         <label for="nombre">Nombre</label>
                     </div>
                     <div class="input-field col s12 m6">
-                        <input placeholder="Ingresa un teléfono" id="telefono" name="Empleado[telefono]" value="<?= $empleado['TELEFONO'] ?>" type="text" class="validate-custom">
+                        <input placeholder="Ingresa un teléfono" id="telefono" name="Empleado[telefono]" value="<?= $empleado['TELÉFONO'] ?>" type="text" class="validate-custom">
                         <label for="telefono">Teléfono</label>
                     </div>
                 </div>
