@@ -6,7 +6,7 @@ class Conexion {
     const HOST = 'localhost';
     const DATABASE = 'MESA_AYUDA';
     const USER = 'root';
-    const PASSWORD = 'Mattelsa.2018*';
+    const PASSWORD = '';
 
     /**
      * Función que permite realizar la conexión a la base de datos
