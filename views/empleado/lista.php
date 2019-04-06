@@ -44,39 +44,37 @@
                     <i class="tiny material-icons white-text" id="clear-message" onclick="clearMessage()">clear</i>
                 </div>
             <?php endif;?>
-            <form class="col s12" id="form-mis-requisitos" name="Empleado[form-mis-requisitos]" onsubmit="return validateForm()" action="../../controllers/EmpleadoController.php?create=1" method="post">
-                <div class="table-usuarios" id="tabla-usuarios">
-                    <a class="waves-effect waves-light btn"><i class="material-icons right">add_circle</i>Crear Usuario</a>
-                    <table class="centered responsive-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Usuario</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Área</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
+            <div class="table-usuarios" id="tabla-usuarios">
+                <a class="waves-effect waves-light btn" href="crear.php"><i class="material-icons right">add_circle</i>Crear Usuario</a>
+                <table class="centered responsive-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Área</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
 
-                        <tbody>
-                            <?php foreach($empleados as $key => $emple):?>
-                                <tr>
-                                    <td><?= utf8_encode($emple['IDEMPLEADO']); ?></td>
-                                    <td><?= utf8_encode($emple['USUARIO']); ?></td>
-                                    <td><?= utf8_encode($emple['NOMBRE']); ?></td>
-                                    <td><?= utf8_encode($emple['EMAIL']); ?></td>
-                                    <td><?= utf8_encode($emple['NOMBRE_AREA']); ?></td>
-                                    <td>
-                                        <a href="<?= "ver.php?id=".$emple['IDEMPLEADO'];?>"><i class="material-icons">visibility</i></a>
-                                        <a href="<?= "editar.php?id=".$emple['IDEMPLEADO'];?>"><i class="material-icons">edit</i></a> 
-                                    </td>
-                                </tr>
-                            <?php endforeach;?>
-                        </tbody>
-                    </table>
-                </div>
-            </form>
+                    <tbody>
+                        <?php foreach($empleados as $key => $emple):?>
+                            <tr>
+                                <td><?= utf8_encode($emple['IDEMPLEADO']); ?></td>
+                                <td><?= utf8_encode($emple['USUARIO']); ?></td>
+                                <td><?= utf8_encode($emple['NOMBRE']); ?></td>
+                                <td><?= utf8_encode($emple['EMAIL']); ?></td>
+                                <td><?= utf8_encode($emple['NOMBRE_AREA']); ?></td>
+                                <td>
+                                    <a href="<?= "ver.php?id=".$emple['IDEMPLEADO'];?>"><i class="material-icons">visibility</i></a>
+                                    <a href="<?= "editar.php?id=".$emple['IDEMPLEADO'];?>"><i class="material-icons">edit</i></a> 
+                                </td>
+                            </tr>
+                        <?php endforeach;?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <script src="../../js/validar_formulario.js"></script>

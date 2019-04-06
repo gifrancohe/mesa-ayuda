@@ -35,11 +35,12 @@
             <a href="#" class="brand-logo">Mesa de Ayuda</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               
-                <li><a href="../views/empleado/lista.php">Administrar usuarios </a></li>
-                <li><a href="badges.html">Gestión areas y Empleados</a></li>
-                <li><a href="collapsible.html">Consultas e Informes</a></li>
-                <li><a href="layouts/mis_requisitos.php">Mis requisitos</a></li>
-                <li><a href="#" class='btn btn.floating waves-effect waves-light btn'><?= $name; ?></a></li>
+                <li><a href="../../views/empleado/lista.php">Administrar usuarios </a></li>
+                <li><a href="../../views/area/lista.php">Gestión Áreas </a></li>
+                <li><a href="#">Consultas e Informes</a></li>
+                <li><a href="../../views/requisito/solucionar.php">Mis requisitos</a></li>
+                <li><a href="../../views/requisito/asignar.php">Asignar requisitos</a></li>
+                <li><a href="../../views/login/login.php?getout=1" class='btn btn.floating waves-effect waves-light btn'><?= $name; ?><i class="tiny material-icons right">close</i></a></li>
               
             </ul>
           </div>

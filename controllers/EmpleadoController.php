@@ -230,7 +230,4 @@ if(!empty($_POST['Empleado'])) {
         $emplCrtl = new EmpleadoController($empleado);
         $emplCrtl->editar($_POST['Empleado']['idempleado']);
     }
-    if($_GET['view']) {
-
-    }
 }

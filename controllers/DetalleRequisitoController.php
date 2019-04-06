@@ -5,22 +5,30 @@ if(!class_exists('Conexion')) {
 if(!class_exists('Area')) {
     include('../models/Area.php');
 }
-class AreaController {
+class DetalleRequisitoController {
     
-    public $area;
+    public $detalle;
 
-    public function AreaController($area = null) {
-        $this->area = $area;
+    public function DetalleRequisitoController($detalle = null) {
+        $this->detalle = $detalle;
     }
 
     public function crear() {
-        $nombre = $this->area->getNombre();
-        $fkemple = $this->area->getIdDirector();
+        
+        $fecha = $this->detalle->getFecha();
+        $observacion = $this->detalle->getObservacion();
+        $fkemple = $this->detalle->getFkemple();
+        $fkreq = $this->detalle->getFkreq();
+        $fkestado = $this->detalle->getFkestado();
+        $fkempleasig = $this->detalle->getFkempleasig();
 
-        if(!empty($fkemple)) {
-            $query = "INSERT INTO AREA ( NOMBRE, FKEMPLE ) VALUES ('".$nombre."', ".$fkemple.")";
+       
+        if(!empty($fkempleasig)) {
+            $query = "INSERT INTO DETALLEREQ (FECHA, OBSERVACION, FKEMPLE, FKREQ, FKESTADO, FKEMPLEASIG) 
+            VALUES ('".$fecha."', '".$observacion."', ".$fkemple.", ".$fkreq.", ".$fkestado.", ".$fkempleasig.")";
         }else {
-            $query = "INSERT INTO AREA ( NOMBRE ) VALUES ('".$nombre."')";
+            $query = "INSERT INTO DETALLEREQ (FECHA, OBSERVACION, FKEMPLE, FKREQ, FKESTADO) 
+            VALUES ('".$fecha."', '".$observacion."', ".$fkemple.", ".$fkreq.", ".$fkestado.")";
         }
         
         $conn = new Conexion();
@@ -29,16 +37,10 @@ class AreaController {
         try {
             $sth = $db->prepare($query);
             $resultado = $sth->execute();
-            if($resultado) {
-                $sth->closeCursor();
-                header("Location:../views/area/crear.php?message=Se creó el área correctamente.");
-            }else {
-                $error = $sth->errorInfo();
-                $sth->closeCursor();
-                header("Location:../views/area/crear.php?error=Ocurrio un error update. Error: ".$error[2]);
-            }
+            $sth->closeCursor();
+            return $resultado;
         } catch (PDOException $e) {
-            header("Location:../views/area/crear.php?error=Ocurrio un error update. Error: ".$e->getMessage());
+            header("Location:../views/requisito/crear.php?error=Ocurrio un error update. Error: ".$e->getMessage());
         }
     }
 
@@ -156,27 +158,8 @@ class AreaController {
         } catch (PDOException $e) {
             header("Location:../../views/area/editar.php?error=".$e->getMessage());
         }
-    }
-}
-
-if(!empty($_POST['Area'])) {
-    if($_GET['create']) {
         
-        $area = new Area(
-            $_POST['Area']['nombre'], 
-            $_POST['Area']['fkemple']
-        );
-    
-        $areaCrtl = new AreaController($area);
-        $areaCrtl->crear();
-    }
-    if($_GET['edit']) {
-        $area = new Area(
-            $_POST['Area']['nombre'], 
-            $_POST['Area']['fkemple']
-        );
-
-        $areaCrtl = new AreaController($area);
-        $areaCrtl->editar($_POST['Area']['idarea']);
+        
     }
 }
+
