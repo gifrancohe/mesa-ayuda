@@ -13,14 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <?php 
-    if($_GET['getout']) {
-        session_start();
-        session_unset();
-        session_destroy();
-        
-    }else {
-        session_start();
-    }
+    session_start();
     if(isset($_SESSION["IDEMPLEADO"])) {
         header("Location:../../index.php");
     }

@@ -40,7 +40,7 @@
                 <li><a href="#">Consultas e Informes</a></li>
                 <li><a href="../../views/requisito/solucionar.php">Mis requisitos</a></li>
                 <li><a href="../../views/requisito/asignar.php">Asignar requisitos</a></li>
-                <li><a href="../../views/login/login.php?getout=1" class='btn btn.floating waves-effect waves-light btn'><?= $name; ?><i class="tiny material-icons right">close</i></a></li>
+                <li><a href="../../views/login/cerrar_sesion.php" class='btn btn.floating waves-effect waves-light btn'><?= $name; ?><i class="tiny material-icons right">close</i></a></li>
               
             </ul>
           </div>

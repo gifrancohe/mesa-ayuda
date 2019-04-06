@@ -39,7 +39,7 @@
                     <i class="tiny material-icons white-text" id="clear-message" onclick="clearMessage()">clear</i>
                 </div>
             <?php endif;?>
-            <form class="col s12" style="padding: 50px;" id="form-asignar-requisitos" name="form-asignar-requisitos" action="../../controllers/RequisitoController.php?assign=1" method="post">
+            <form class="col s12" style="padding: 50px;" id="form-asignar-requisitos" name="form-asignar-requisitos" onsubmit="return validateForm()" action="../../controllers/RequisitoController.php?assign=1" method="post">
                 <div class="row col s12 m6">
                     <div class="row center">
                         <div class="input-field col s12 m12">
