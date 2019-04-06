@@ -19,7 +19,7 @@
   <div class="footer-copyright">
     <div class="container">
       © <?php echo date('Y'); ?> Copyright
-      <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+      <a class="grey-text text-lighten-4 right"  href="https://www.instagram.com/felipe.ramirezrestrepo/">@felipe.ramirezrestrepo</a>
     </div>
   </div>
 </footer>

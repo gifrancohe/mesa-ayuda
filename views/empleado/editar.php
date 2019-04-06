@@ -51,6 +51,7 @@
                 <div class="row">
                     <div class="input-field col s12 m6">
                         <input id="idempleado" name="Empleado[idempleado]" value="<?= $empleado['IDEMPLEADO'] ?>" type="hidden" class="validate-custom">
+                        <input id="idusuario" name="Empleado[idusuario]" value="<?= $empleado['IDUSUARIO'] ?>" type="hidden" class="validate-custom">
                         <input placeholder="Ingresa un nombre" id="nombre" name="Empleado[nombre]" value="<?= $empleado['NOMBRE'] ?>" type="text" class="validate-custom">
                         <label for="nombre">Nombre</label>
                     </div>
@@ -96,6 +97,16 @@
                         <?php endforeach;?>
                         </select>
                         <label>Lider usuario</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <input placeholder="Ingresa un usuario" id="usuario"  name="Empleado[usuario]" value="<?= $empleado['USUARIO'] ?>" type="text" class="validate-custom">
+                        <label for="usuario">Usuario</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <input placeholder="Ingresa un password" id="password" name="Empleado[password]" value="<?= $empleado['PASSWORD'] ?>" type="text" class="validate-custom">
+                        <label for="password">Password</label>
                     </div>
                 </div>
                 <div class="input-field col s12 m12 center">

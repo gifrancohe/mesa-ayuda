@@ -50,6 +50,37 @@ class LoginController {
         
     }
 
+    public function updateUser($id) {
+        
+        $usuario = $this->login->getUsuario();
+        $password = $this->login->getPassword();
+
+        if(!empty($usuario) && !empty($password)) {
+
+            $password = password_hash($password, PASSWORD_DEFAULT);
+            
+            $query = "UPDATE `USUARIO` 
+            SET `USUARIO` = '".$usuario."', `PASSWORD` = '".$password."'
+            WHERE `IDUSUARIO` =".$id;
+            
+            $conn = new Conexion();
+            $db = $conn->connect();
+    
+            try {
+                $sth = $db->prepare($query);
+                $resultado = $sth->execute();
+                $sth->closeCursor();
+                return $resultado;
+
+            } catch (PDOException $e) {
+                echo "<pre>";
+                print_r($e->getMessage());
+                echo "</pre>";
+                die;
+            }
+        }
+    }
+
     public function login() {
 
         $usuario = $this->login->getUsuario();

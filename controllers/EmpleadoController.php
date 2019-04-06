@@ -125,7 +125,9 @@ class EmpleadoController {
             `EMPLEADO`.`TELEFONO` AS `TELÉFONO`,
             `EMPLEADO`.`CARGO`,
             `EMPLEADO`.`EMAIL`,
+            `USUARIO`.`IDUSUARIO`,
             `USUARIO`.`USUARIO`,
+            `USUARIO`.`PASSWORD`,
             (SELECT `EMPLE`.`NOMBRE` FROM `EMPLEADO` AS `EMPLE` WHERE `EMPLE`.`IDEMPLEADO` = `EMPLEADO`.`FKEMPLE` ) AS `LIDER`,
             `AREA`.`IDAREA`,
             `AREA`.`NOMBRE` AS `AREA`
@@ -226,6 +228,10 @@ if(!empty($_POST['Empleado'])) {
             $_POST['Empleado']['area'], 
             $_POST['Empleado']['lider'] ? $_POST['Empleado']['lider']:null 
         );
+
+        $login = new Login($_POST['Empleado']['usuario'], $_POST['Empleado']['password']);
+        $loginCtrl = new LoginController($login);
+        $idUser = $loginCtrl->updateUser($_POST['Empleado']['idusuario']);
 
         $emplCrtl = new EmpleadoController($empleado);
         $emplCrtl->editar($_POST['Empleado']['idempleado']);
