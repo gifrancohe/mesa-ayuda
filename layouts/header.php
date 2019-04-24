@@ -32,7 +32,7 @@
       <nav class="grey darken-4">
         <div class="container">
           <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Mesa de Ayuda</a>
+            <a href="../../views/requisito/crear.php" class="brand-logo">Mesa de Ayuda</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               
                 <li><a href="../../views/empleado/lista.php">Administrar usuarios </a></li>

@@ -52,15 +52,15 @@ class EmpleadoController {
             $resultado = $sth->execute();
             if($resultado) {
                 $sth->closeCursor();
-                header("Location:../../views/empleado/crear.php?message=Se creó el empleado correctamente.");
+                header("Location:../views/empleado/crear.php?message=Se creó el empleado correctamente.");
             }else {
                 $error = $sth->errorInfo();
                 $sth->closeCursor();
-                header("Location:../../views/empleado/crear.php?error=Ocurrio un error update. Error: ".$error[2]);
+                header("Location:../views/empleado/crear.php?error=Ocurrio un error update. Error: ".$error[2]);
             }
 
         } catch (PDOException $e) {
-            header("Location:../../views/empleado/crear.php?error=".$e->getMessage());
+            header("Location:../views/empleado/crear.php?error=".$e->getMessage());
         }
         
         
@@ -176,15 +176,15 @@ class EmpleadoController {
             $resultado = $sth->execute();
             if($resultado) {
                 $sth->closeCursor();
-                header("Location:../../views/empleado/lista.php?message=Se actualizo correctamente el usuario ".$nombre);
+                header("Location:../views/empleado/lista.php?message=Se actualizo correctamente el usuario ".$nombre);
             }else {
                 $error = $sth->errorInfo();
                 $sth->closeCursor();
-                header("Location:../../views/empleado/editar.php?error=Ocurrio un error editando. Error: ".$error[2]);
+                header("Location:../views/empleado/editar.php?error=Ocurrio un error editando. Error: ".$error[2]);
             }
 
         } catch (PDOException $e) {
-            header("Location:../../views/empleado/editar.php?error=".$e->getMessage());
+            header("Location:../views/empleado/editar.php?error=".$e->getMessage());
         }
         
         
@@ -201,7 +201,7 @@ if(!empty($_POST['Empleado'])) {
         # Check if your variable is an integer
         if ( is_array($idUser) ) {
             $error = $idUser[2];
-            header("Location:../../views/empleado/crear.php?error=Ocurrio un error al crear el usuario. Error: ".$error);
+            header("Location:../views/empleado/crear.php?error=Ocurrio un error al crear el usuario. Error: ".$error);
         }else{
             $empleado = new Empleado(
                 $_POST['Empleado']['nombre'], 

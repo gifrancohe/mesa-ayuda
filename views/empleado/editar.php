@@ -105,7 +105,7 @@
                         <label for="usuario">Usuario</label>
                     </div>
                     <div class="input-field col s12 m6">
-                        <input placeholder="Ingresa un password" id="password" name="Empleado[password]" value="<?= $empleado['PASSWORD'] ?>" type="text" class="validate-custom">
+                        <input placeholder="Ingresa un password" id="password" name="Empleado[password]" value="<?= $empleado['PASSWORD'] ?>" type="password" class="validate-custom">
                         <label for="password">Password</label>
                     </div>
                 </div>
