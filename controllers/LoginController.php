@@ -103,6 +103,7 @@ class LoginController {
                     session_start();
                     $query = "SELECT * FROM `USUARIO` 
                     LEFT JOIN `EMPLEADO` ON `EMPLEADO`.FKUSUARIO = `USUARIO`.IDUSUARIO
+                    LEFT JOIN `AREA` ON `AREA`.`FKEMPLE` = `EMPLEADO`.`IDEMPLEADO`
                     WHERE `USUARIO`.IDUSUARIO = ".$resultado['IDUSUARIO'];
                     $sth = $db->prepare($query);
                     $resultado = $sth->execute();
