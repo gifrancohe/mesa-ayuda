@@ -32,7 +32,9 @@
     <ul id="dropdown1" class="dropdown-content">
       <li><a href="../../views/reporte/areas.php">Reporte de Àreas</a></li>
       <li><a href="../../views/reporte/empleados.php">Reporte Empleados</a></li>
-      <li><a href="../../views/reporte/requisitos.php">Reporte requisitos</a></li>
+      <li><a href="../../views/reporte/requisitos.php">Reporte Requisitos</a></li>
+      <li><a href="../../views/reporte/observacion.php">Reporte Observación</a></li>
+      <li><a href="../../views/reporte/nombres.php">Reporte Nombres</a></li>
     </ul>
     <div class="navbar-fixed">
       <nav class="grey darken-4">

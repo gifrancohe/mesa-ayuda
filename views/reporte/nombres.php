@@ -13,15 +13,12 @@
     if(!class_exists('ReporteController')) {
         include('../../controllers/ReporteController.php');
     }
-   
-    $reporte = new ReporteController();
-    $areas = $reporte->reporteAreas();
 ?>
 <main>
     <div class="container" style="margin-top: 20px;">
         <div class="row card s12 m12" style="padding: 15px;">
             <div>
-                <h5 class="center-align teal-text text-lighten-1">Reporte de Directores Sin Requisitos</h5>
+                <h5 class="center-align teal-text text-lighten-1">Reporte de asigandos a requisitos sin solución total</h5>
             </div>
             <?php if(isset($_GET['message'])): ?>
                 <div class="card-panel teal lighten-2" id="card-response-message">
@@ -35,7 +32,7 @@
                     <i class="tiny material-icons white-text" id="clear-message" onclick="clearMessage()">clear</i>
                 </div>
             <?php endif;?>
-            <form class="col s12" style="padding: 50px;" id="form-create-reporte" name="Area[form-create-reporte]" onsubmit="return validateForm()" action="../../controllers/ReporteController.php?create=1" method="post">
+            <form class="col s12" style="padding: 50px;" id="form-create-reporte" name="Reporte[form-create-reporte]" onsubmit="return validateForm()" action="../../controllers/ReporteController.php?observacion=1" method="post">
                 <div class="row">
                     <div class="input-field col s12 m6">
                         <input type="text" class="datepicker" id="fecha-inicial" name="Reporte[fecha-inicial]" class="validate-custom">
@@ -57,10 +54,10 @@
             <table class="centered responsive-table">
                 <thead>
                     <tr>
-                        <th>DIRECTOR</th>
-                        <th>TELÉFONO</th>
-                        <th>EMAIL</th>
-                        <th>ÁREA</th>
+                        <th>NOMBRE</th>
+                        <th>REQUISITO</th>
+                        <th>FECHA</th>
+                        <th>ESTADO</th>
                     </tr>
                 </thead>
 
@@ -95,7 +92,7 @@
         $("#tbody-data").empty();
 
         $.ajax({
-            url: "../../controllers/ReporteController.php?create=1",
+            url: "../../controllers/ReporteController.php?nombres=1",
             type: "POST",
             data: datos
         }).done(function(response){
@@ -105,7 +102,7 @@
                 let data = JSON.parse(response);
                 data = Object.values(data);
                 data.map(item => {
-                    tbody += "<tr><td>"+item['NOMBRE']+"</td><td>"+item['TELEFONO']+"</td><td>"+item['EMAIL']+"</td><td>"+item['AREA']+"</td></tr>"; 
+                    tbody += "<tr><td>"+item['EMPLEADO']+"</td><td>"+item['FKREQ']+"</td><td>"+item['FECHA']+"</td><td>"+item['NOMBRE']+"</td></tr>"; 
                 });
                 $("#tbody-data").append(tbody);
                 $("#show-result").show();

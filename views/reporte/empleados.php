@@ -10,10 +10,6 @@
         include('../../controllers/Conexion.php');
     }
 
-    /*include('../../models/Login.php');
-    include('../../models/Empleado.php');
-    include('../../models/Area.php');
-    */
     if(!class_exists('ReporteController')) {
         include('../../controllers/ReporteController.php');
     }
