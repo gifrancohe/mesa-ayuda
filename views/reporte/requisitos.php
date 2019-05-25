@@ -102,6 +102,7 @@
             console.log(response);
             if(response !== "null" && response.length !== 0) {
                 let tbody = "";
+                console.log(typeof response);
                 let data = JSON.parse(response);
                 data = Object.values(data);
                 data.map(item => {

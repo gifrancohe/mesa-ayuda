@@ -153,57 +153,65 @@
 
         public function solucionar($data) {
             if(!empty($data)) {
-                try {
-                    $conn = new Conexion();
-                    $db = $conn->connect();
-
-                    $observacion = $data['Requisito']['requisito'];
-                    $estadoAsignado = $data['Requisito']['estado'];
-
-                    $error = false;
-                    
-                    foreach( $data['Requisitos'] as $key => $req) {
-                        // Insertamos el detalle del requisito
-                        $detalle = new DetalleRequisito(
-                            date('Y-m-d h:i:s'),
-                            $observacion,
-                            $_SESSION['IDEMPLEADO'],
-                            $key,
-                            $estadoAsignado
-                        );
-                        
-                        $detaCtrl = new DetalleRequisitoController($detalle);
-                        $detaResult = $detaCtrl->crear();
-                        
-                        if($detaResult) {
-                            $query = "UPDATE `REQUISITO` SET 
-                            `FKESTADO` = ".$estadoAsignado."
-                            WHERE `IDREQ` = ".$key;
-                            
+                if(!empty($data['Requisito']['requisito']) && !empty($data['Requisito']['estado'])) {
+                    if(!empty($data['Requisitos'])) {
+                        try {
                             $conn = new Conexion();
                             $db = $conn->connect();
 
-                            $sth = $db->prepare($query);
-                            $resultado = $sth->execute();
-                            $sth->closeCursor();
+                            $observacion = $data['Requisito']['requisito'];
+                            $estadoAsignado = $data['Requisito']['estado'];
 
-                            if(!$resultado) {
-                                $error = true;
+                            $error = false;
+                            
+                            foreach( $data['Requisitos'] as $key => $req) {
+                                // Insertamos el detalle del requisito
+                                $detalle = new DetalleRequisito(
+                                    date('Y-m-d h:i:s'),
+                                    $observacion,
+                                    $_SESSION['IDEMPLEADO'],
+                                    $key,
+                                    $estadoAsignado
+                                );
+                                
+                                $detaCtrl = new DetalleRequisitoController($detalle);
+                                $detaResult = $detaCtrl->crear();
+                                
+                                if($detaResult) {
+                                    $query = "UPDATE `REQUISITO` SET 
+                                    `FKESTADO` = ".$estadoAsignado."
+                                    WHERE `IDREQ` = ".$key;
+                                    
+                                    $conn = new Conexion();
+                                    $db = $conn->connect();
+
+                                    $sth = $db->prepare($query);
+                                    $resultado = $sth->execute();
+                                    $sth->closeCursor();
+
+                                    if(!$resultado) {
+                                        $error = true;
+                                    }
+
+                                }else {
+                                    $error = true;
+                                }
+                                
                             }
-
-                        }else {
-                            $error = true;
+                            if($error) {
+                                header("Location:../views/requisito/solucionar.php?error=Ocurrio un error al solucionar los requisitos.");
+                            }else {
+                                header("Location:../views/requisito/solucionar.php?message=Caso Gestionado.");
+                            }
+                        } catch (PDOException $e) {
+                            $this->db->rollBack();
+                            header("Location:../index.php?message=".$e->getMessage());
                         }
-                        
-                    }
-                    if($error) {
-                        header("Location:../views/requisito/solucionar.php?error=Ocurrio un error al solucionar los requisitos.");
                     }else {
-                        header("Location:../views/requisito/solucionar.php?message=Caso Gestionado.");
+                        header("Location:../views/requisito/solucionar.php?error=Debe seleccionar al menos un requisito.");
                     }
-                } catch (PDOException $e) {
-                    $this->db->rollBack();
-                    header("Location:../index.php?message=".$e->getMessage());
+                }else {
+                    header("Location:../views/requisito/solucionar.php?error=Debe ingresar una observación o un estado.");
                 }
             }else {
                 header("Location:../views/requisito/solucionar.php?error=No se tiene data para solucionar.");
@@ -398,7 +406,9 @@
             INNER JOIN `DETALLEREQ` AS `DET` ON `DET`.FKREQ = `REQ`.IDREQ
             INNER JOIN `AREA` ON `AREA`.`IDAREA` = `REQ`.FKAREA
             INNER JOIN `EMPLEADO` ON `EMPLEADO`.`IDEMPLEADO` = `DET`.FKEMPLEASIG
-            WHERE `REQ`.FKESTADO = 2 AND `EMPLEADO`.`IDEMPLEADO` = ".$idUser.";";
+            WHERE `REQ`.FKESTADO = 2
+            --AND `REQ`.FKESTADO = 3
+            AND `EMPLEADO`.`IDEMPLEADO` = ".$idUser.";";
             
             $conn = new Conexion();
             $db = $conn->connect();
@@ -485,10 +495,6 @@
         if($_GET['solu']) {
             $requisitoCrtl = new RequisitoController();
             $requisitoCrtl->solucionar($_POST);
-            echo "<pre>";
-            var_dump($_POST);
-            echo "</pre>";
-            die;
         }
         if($_GET['assign']) {
             $requisitoCrtl = new RequisitoController();

@@ -64,7 +64,7 @@
                     <div class="row center">
                         <div class="input-field col s12 m6 center">
                             <select name="Requisito[estado]">
-                                <option value="" disabled selected>Selecciona el empleado</option>
+                                <option value="" disabled selected>Selecciona el estado</option>
                                 <?php foreach($estadoCtrl->getEstados() as $key => $estado):?>
                                     <option value="<?= $estado['IDESTADO'];?>"> <?= utf8_encode($estado['NOMBRE']); ?> </option>
                                 <?php endforeach; ?>
